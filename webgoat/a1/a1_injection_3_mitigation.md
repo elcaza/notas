@@ -126,3 +126,26 @@ public static String loadAccount() {
 + `setString(2, "example@example.com")`
 
 ## Ejercicio (6)
+
+
+**Ejemplo:**
+```sql
+try {
+  Connection conn = null;
+  System.out.println(conn);   //should output 'null'
+} catch (Exception e) {
+    System.out.println("Oops. Something went wrong!");
+}
+```
+
+**Resolución:**
+```sql
+try {  
+  Connection conn = DriverManager.getConnection(DBURL, DBUSER, DBPW);  
+  PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE name = ?");  
+  ps.setString(1, "Admin");  
+  ps.executeUpdate();  
+} catch (Exception e) {  
+  System.out.println("Hubo un error :c");  
+}
+```
