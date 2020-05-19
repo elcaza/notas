@@ -1,0 +1,7 @@
+curl -u 'USER' https://api.github.com/user/repos -d '{"name":"PROJECT_NAME","description":"PROJECT_DESCRIPTION"}'
+git remote add origin git@github.com:USER/projectname.git
+git remote set-url origin git://new.url.here
+git push -u origin master
+
+git add .
+git commit -m "comentario Commit"

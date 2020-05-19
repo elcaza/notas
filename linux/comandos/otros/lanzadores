@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Buttercup
+Comment=Gestro de contrasenas
+#Exec=/opt/Buttercup/buttercup-desktop
+Exec=firefox -new-window http://www.google.com
+Terminal=false
+Icon=/opt/Buttercup/logo.png
+Type=Application
+StartupNotify=true
+
+
+xdg-open http://stackoverflow.com
+python -m webbrowser "http://www.example.com/"

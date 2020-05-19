@@ -1,0 +1,69 @@
+=========================
+Arris Pre-shared key
+
+ARRIS-FF52
+B7C43158DCAEF80F
+B7C4 3158 DCAE F80F (16)
+WPS: 87625035 (8)
+
+Hexadecimal
+
+=========================
+Arris Pre-shared key
+
+ARRIS-A652
+42EBB62540DBD403
+42EB B625 40DB D403 (16)
+WPS: 75383916 (8)
+
+Hexadecimal
+
+=========================
+Arris Pre-shared key
+
+ARRIS-TG1672G
+TG1672G1E1F02
+TG16 72G1 E1F02 (13)
+WPS: 33409566 (8)
+
+==========================
+***************************
+***************************
+WEB 64bits or 128bits
+10 - 26 caracteres
+
+NOTE: WEP keys use hexadecimal characters, which are 0 - 9 and a - f.  For best security, it is recommended to avoid the use of all the same characters.  
+
+***************************
+***************************
+TG862G/NA: WPA-PSK Wireless Setup
+Arris lo trae por default
+
+NOTE: Select WPA-PSK for backward compatibility, WPA2-PSK for maximum security, or WPA/WPA2-PSK for maximum interoperability.  In the example below, WPA2-PSK + WPA-PSK is selected. Click the Apply button.
+
+NOTE: Encryption Algorithm - Click the drop-down menu, and select TKIP, AES, or TKIP/AES.
+
+Select TKIP for backward compatibility, 
+AES for maximum security,
+TKIP/AES for maximum interoperability.
+
+Pre-Shared Key: The WPA key must be 8 - 63 characters.
+
+Caracteres ASCII o 64 caracteris hexadecimales
+
+***************************
+***************************
+Telmex
+No. Serie 
+	1526g62qlvhn (12)
+	1003fa5b03b8 (12)
+
+WPA 3PaTEcBLME
+	3PaT EcBL ME (10)
+
+	tS6nVRv9dD
+	tS6n VRv9 dD (10)
+WPA
+	FBABF41A4E (10 HEX)
+WEB KEY
+	6236396561 (10)

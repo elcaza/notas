@@ -1,0 +1,13 @@
+Respaldo
+
+mysqldump -u <usuario> -p<contraseña> nombre-de-la-base-de-datos > nombre-del-respaldo.sql
+mysqldump -u <usuario> -p<contraseña> -h<nombre-o-dirección-del-host> nombre-de-la-base-de-datos > nombre-del-respaldo.sql
+
+==============================================
+Restaurar
+
+mysql -u <usuario> -p<contraseña> nombre-de-la-base-de-datos < nombre-del-respaldo.sql
+mysql -u <usuario> -p<contraseña> -h<nombre-o-dirección-del-host> nombre-de-la-base-de-datos < nombre-del-respaldo.sql
+
+
+

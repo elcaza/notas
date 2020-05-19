@@ -1,0 +1,134 @@
+Comandos listados:
+	cut
+	sort
+	head
+	tail
+	paste
+	tr
+	uniq
+	wc
+	expr
+
+Anexo:
+	Shell
+	Metacaracteres
+	Tabla de archivos del kernel
+	Redireccionamientos
+	Comillas
+	Variables
+	Manejo de Textos
+
+===================================================================
+===================================================================
+
+cut
+	cut [opciones]... [archivo]...
+	-c  lista    caracteres que serán cortados 
+	-f  campos   campos que serán cortados
+	-d	delimitador	separador de campos
+
+sort
+	sort [opciones]... [archivos]...
+	-r	Tipo de ordenamiento 
+	-n	Orden numerico 
+	-g	Ordenamiento general numerico 
+	-f 	Ignora diferencia entre mayusculas y minusculas 
+	-u 	Borra lineas duplicadas 
+	-k 	campo 	campos a ordenar 
+	-t 	Separador de campo 
+
+head
+	Muestra la "n" primera parte de un archivo 
+	-c caracteres
+
+tail
+	Muestra la "n" última parte de un archivo 
+
+paste
+	paste [opciones] [archivo] ...
+	-s 	pega los archivos en forma de renglones 
+	-d	separador de campos
+tr
+	tr [opciones] cadena1 [cadena2]
+	traduce caracteres
+	-d 	Borra todos los caracteres que se encuentren en [cadena1]
+	-s 	reduce a 1 los caracters de [cadena1] y los sustituye por [cadena2]
+	-c	Utiliza el complemente de la cadena1
+
+uniq
+	uniq [opciones]... [archivo]...
+	-d	Muestra una copia de las líneas que se repiten 
+	-u 	Muestra sólo las líneas que no se repiten 
+	-c 	Muestra el número de veces que se repiten las líneas del archivo 
+
+wc
+	Cuenta líneas, palabras y caracteres 
+	wc [opciones]... [archivo]... 
+	-c	Cuenta bytes 
+	-m 	Cuenta caracteres 
+	-w 	Cuenta palabras 
+	-l 	Cuenta líneas 
+
+expr
+
+********************************************************************************
+********************************************************************************
+** Anexos
+
+Shell
+	Historia 
+	Entrecomillas 
+	Alias
+	Redireccionamientos
+	Variables 
+	Comandos
+	Metacaracteres
+
+Metacaracteres 
+	Caracteres con significado especial
+
+Tabla de archivos del kernel
+	stdin   fd = 0
+	stdout  fd = 1
+	stderr  fd = 2
+
+Redireccionamientos
+	stdin archivo
+		prog < archivo  (No destructivo)
+			cat < archivo
+	
+	stdout archivo (destructivo)
+		prog > archivo 
+			ls > archivo 
+
+	stderr archivo (destructivo)
+		prog 2> archivo
+		cat /etc 2> archivo
+
+	stdout y stderr a archivo 
+		prog > archivo 2>1&
+
+	añade stdout y stderr a archivo 
+		prog >> archivo 2>1&
+
+	stdin de la fuente actual hasta delimitador 
+		prog << delimitador
+
+	añade stdout a archivo 
+		prog >> delimitador 
+
+Comillas
+	simples ''
+		desactivan cualquier significado especial 
+	dobles ""
+		desactivan cualquier significado especial excepto $ \ ` 
+	\ 
+		desactiva el significado especial del próximo caracter 
+
+	echo "este es la fecha $(date)"   
+
+Variables
+	LANG = idioma
+
+Manejo de caracteres 
+	[:clase:]
