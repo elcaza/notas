@@ -193,4 +193,62 @@ try {
 catch (Exception e) { // Handle all exceptions��� }
 ```
 
+> Recuerda que la validación de inputs es requerida para evitar:
+> + Stored XSS
+> + Information leakage
+> + Logic errors ��� business rule validation
+> + SQL injection
+
+## Ordenar por cláusula
+
+Una declaración preparada a veces no es suficiente para prevenir un SQL Injection
+Por ejemplo:
+
+```sql
+SELECT * FROM users ORDER BY lastname;
+```
+
+Si miramos la especificación la definición es la siguiente:
+
+```sql
+SELECT ...
+FROM tableList
+[WHERE Expression]
+[ORDER BY orderExpression [, ...]]
+
+orderExpression:
+{ columnNr | columnAlias | selectExpression }
+    [ASC | DESC]
+
+selectExpression:
+{ Expression | COUNT(*) | {
+    COUNT | MIN | MAX | SUM | AVG | SOME | EVERY |
+    VAR_POP | VAR_SAMP | STDDEV_POP | STDDEV_SAMP
+} ([ALL | DISTINCT][2]] Expression) } [[AS] label]
+
+Based on HSQLDB
+```
+
+Lo anterior significa que una **orderExpression** puede ser una **selectExpression** que también puede ser una función, por lo que, por ejemplo, con una declaración de caso, podríamos hacerle algunas preguntas a la base de datos, como:
+
+```sql
+SELECT * FROM users ORDER BY (CASE WHEN (TRUE) THEN lastname ELSE firstname)
+```
+
+Entonces podemos sustituir cualquier tipo de operación booleana en la parte when (...). La declaración simplemente funcionará porque es una consulta válida, ya sea que use una declaración preparada o no, una orden por cláusula puede, por definición, contener una expresión.
+
+**Mitigación:**
+
+Si se requiere proporcionar una columna de clasificación en la aplicación web, debe implementar una lista blanca para validar el valor del pedido por declaración, siempre debe limitarse a algo como 'nombre' o 'apellido'.
+
 ## Ejercicio 3 (10)
+
+Para este ejercicio requerimos entender la lección de **Ordenar por cláusula** en la que 
+
+```sql
+column=(CASE WHEN (SELECT ip FROM servers WHERE hostname='webgoat-acc') = '192.168.3.3' THEN id ELSE hostname END)
+```
+
+```sql
+column=(CASE WHEN (SELECT ip FROM whatever WHERE hostname='webgoat-acc') = '192.168.3.3' THEN id ELSE hostname END)
+```
