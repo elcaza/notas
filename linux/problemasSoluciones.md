@@ -58,3 +58,7 @@ Para habilitar la grabación mediante la webcam debemos hacer:
 
 ## Redireccionamiento
 + http://persoal.citius.usc.es/tf.pena/ASR/Tema_2html/node16.html
+
+
+# Instalar sonarqube Linux
++ https://techexpert.tips/sonarqube/sonarqube-installation-ubuntu-linux/
