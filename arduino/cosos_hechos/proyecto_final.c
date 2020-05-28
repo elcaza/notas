@@ -24,6 +24,7 @@ const int gSH = 830;
 const int aH = 880;
 
 const int buzzerPin = 13; // Digital Pin 13
+const int ledPin3 = 8;  // Digital Pin 9
 const int ledPin1 = 9;  // Digital Pin 9
 const int ledPin2 = 10;  // Digital Pin 10 Built In Led can Change it if you want
 
@@ -38,6 +39,7 @@ int acciona = 0;
 */
 int motor_vas = 1;
 int motor_regresa = 0;
+int ldr_rango = 512;
 
 /**
 * ====================================================================
@@ -77,6 +79,9 @@ int pinB = 7;
 int pinC = 11;
 int pinD = 12;
 
+// LDR
+int LDR = A0;
+
 void setup()
 {
 	// Setup pin modes
@@ -100,8 +105,7 @@ void setup()
 	pinMode(pinC, OUTPUT);
 	pinMode(pinD, OUTPUT);
 
-	// LDR
-	int LDR = A0;
+	
 	
 }
 
@@ -111,6 +115,8 @@ void loop()
 	//enter_password(1000);
 	// motor_vas_a(1000);
 	// motor_vas_b(1000);
+
+	password_setting = 0;
 
 	// Primer valor del password
 	while (password_setting != 1){
@@ -219,9 +225,13 @@ void loop()
 	}
 
 	if ( check_password() == 1 ){
+		apaga_sonido(100);
 		digitalWrite(ledPin1, HIGH);
+		abre_puerta();
 	} else {
 		reset_password_value();
+		setAllLow();
+		digitalWrite(ledPin1, LOW);
 	}
 
 }
@@ -229,8 +239,13 @@ void loop()
 // Check password
 int check_password() {
 	if ( password_value_1 == the_password_value_1 && password_value_2 == the_password_value_2 && password_value_3 == the_password_value_3 && password_value_4 == the_password_value_4) {
+		counter_password = 0;
 		return 1;
 	} else {
+		counter_password++;
+		if (counter_password > 2){
+			password_incorrecto();
+		}
 		return 0;
 	}
 }
@@ -257,6 +272,12 @@ void motor_vas_b(int delay_time){
 	digitalWrite(motor_vas, LOW);
 	digitalWrite(motor_regresa, HIGH);
 	delay(delay_time);
+}
+
+void motor_para(int ms){
+	digitalWrite(motor_vas, LOW);
+	digitalWrite(motor_regresa, LOW);
+	delay(ms);
 }
 
 void play_music()
@@ -303,12 +324,12 @@ void beep(int note, int duration)
   //Play different LED depending on value of 'counter'
   if(counter % 2 == 0)
   {
-	digitalWrite(ledPin1, HIGH);
+	// digitalWrite(ledPin1, HIGH);
 	delay(duration);
 	digitalWrite(ledPin1, LOW);
   }else
   {
-	digitalWrite(ledPin2, HIGH);
+	// digitalWrite(ledPin2, HIGH);
 	delay(duration);
 	digitalWrite(ledPin2, LOW);
   }
@@ -418,4 +439,59 @@ void enter_password_4(int delay_time){
 	digitalWrite(pinC, HIGH);
 	digitalWrite(pinD, HIGH);
 	delay(delay_time);
+}
+
+// Abrir puerta
+
+void abre_puerta(){
+	while( analogRead(LDR) > ldr_rango ){
+		motor_vas_a(200);
+	}
+	motor_para(100);
+	espera_auto();
+}
+
+// Cierra puerta
+
+void cierra_puerta(){
+	delay(1000);
+	while( analogRead(LDR) > ldr_rango ){
+		motor_vas_b(200);
+	}
+	motor_para(100);
+	play_music();
+	
+}
+
+void espera_auto(){
+	delay(1000);
+	while( analogRead(LDR) > ldr_rango ){
+		digitalWrite(ledPin2, HIGH);
+		digitalWrite(ledPin3, HIGH);
+	}
+	digitalWrite(ledPin2, LOW);
+	digitalWrite(ledPin3, LOW);
+	cierra_puerta();
+	//cierra_puerta();
+	
+}
+
+void apaga_sonido(int ms) {
+	digitalWrite(buzzerPin, LOW);
+	delay(ms);
+}
+
+void prende_sonido(int ms) {
+	digitalWrite(buzzerPin, HIGH);
+	delay(ms);
+}
+
+void password_incorrecto(){
+	prende_sonido(300);
+	apaga_sonido(300);
+	prende_sonido(300);
+	apaga_sonido(300);
+	prende_sonido(300);
+	apaga_sonido(300);
+	prende_sonido(300);
 }
