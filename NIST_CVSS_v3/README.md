@@ -163,5 +163,7 @@ Valores: [H,L,N,X]
 
 # Referencias 
 
-+ [Common Vulnerability Scoring System Calculator V3](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator)
++ [Common Vulnerability Scoring System Version 3.0 Calculator - FIST](https://www.first.org/cvss/calculator/3.0)
++ [Common Vulnerability Scoring System Calculator V3 - NIST](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator)
 + [Métricas de evaluación de vulnerabilidades: CVSS 3.0](https://www.incibe-cert.es/blog/cvss3-0)
++ [CVSS user guide](https://www.first.org/cvss/user-guide)
