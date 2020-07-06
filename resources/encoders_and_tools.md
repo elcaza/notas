@@ -28,3 +28,15 @@ this%20is%20AN%20Example%20%26%2B*
 
 # CyberChef
 + https://gchq.github.io/CyberChef/
+
+****************************************************************************
+
+# Tools
++ https://chrome.google.com/webstore/detail/tamper-chrome-extension/hifhgpdkfodlpnlmlnmhchnkepplebkb
++ https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop
+
+
+****************************************************************************
+
+# Chats of communities
++ https://gitter.im/bkimminich/juice-shop#
