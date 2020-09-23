@@ -14,15 +14,17 @@
 ************************************************************************
 
 # HTML URL Encoding Reference}
-+ https://www.w3schools.com/tags/ref_urlencode.ASP
-+ https://es.wikipedia.org/wiki/C%C3%B3digo_porciento
 + https://meyerweb.com/eric/tools/dencoder/
++ https://www.w3schools.com/tags/ref_urlencode.ASP
++ https://en.wikipedia.org/wiki/Percent-encoding
++ https://es.wikipedia.org/wiki/C%C3%B3digo_porciento
 + https://www.urlencoder.io/
 
 ## Examples
 ```
 this%20is%20AN%20Example%20%26%2B*
 ```
+* Simbolos como `/` y `#` podría ser necesario que se codifiquen, pues de otra forma podrían tener comportamientos inesperados
 
 ************************************************************************
 
@@ -34,6 +36,7 @@ this%20is%20AN%20Example%20%26%2B*
 # Tools
 + https://chrome.google.com/webstore/detail/tamper-chrome-extension/hifhgpdkfodlpnlmlnmhchnkepplebkb
 + https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop
++ https://crackstation.net/
 
 
 ****************************************************************************
