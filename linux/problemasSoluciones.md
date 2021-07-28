@@ -59,7 +59,11 @@ Para habilitar la grabación mediante la webcam debemos hacer:
 ## Redireccionamiento
 + http://persoal.citius.usc.es/tf.pena/ASR/Tema_2html/node16.html
 
+## Burp
+Instalar CA de BURP
+1. Descargar el certificado desde:
+    + http://burp/
 
-# Instalar sonarqube Linux
+## Instalar sonarqube Linux
 + https://techexpert.tips/sonarqube/sonarqube-installation-ubuntu-linux/
 + https://techexpert.tips/sonarqube/sonarqube-scanner-installation-ubuntu-linux/
