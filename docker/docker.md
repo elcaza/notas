@@ -14,6 +14,18 @@ docker --version
 Pasos de post instalación
 + https://docs.docker.com/engine/install/linux-postinstall/
 
+## Hello word en docker
+
+**Repositorio**
++ https://hub.docker.com/_/hello-world
+
+~~~bash
+# Descarga la imagen
+docker pull hello-world
+
+# Ejecuta Hello world
+docker run hello-world
+~~~
 
 # Conceptos importaes
 
@@ -31,12 +43,12 @@ Pasos de post instalación
     + Puede ser público o privado (DockerHub o Propio)
     + El registro contiene repositorios donde vive cada imágen
 
-# Imagenes de docker
+## Imagenes de docker
 Al igual que en github, docker tiene imagenes que puedes usar como base en:
 + https://hub.docker.com/
 
 
-# Creación de contenedores
+## Creación de contenedores
 1. Primero se busca localmente la imágen
 2. Si no se tiene se busca en línea
 
@@ -45,20 +57,9 @@ Corroborar qué imagenes se tienen en nuestra computadora
 docker images
 ~~~
 
-## Hello word en docker
-
-**Repositorio**
-+ https://hub.docker.com/_/hello-world
+# Comandos básicos
 
 ~~~bash
-# Descarga la imagen
-docker pull hello-world
-
-~~~
-
-## Comandos básicos
-
-~~~ bash
 # Corroborar qué imagenes se tienen en nuestra computadora
 docker images
 
@@ -74,10 +75,49 @@ docker run -it ubuntu
 # Entrar al contenedor y ejecutar un comando
 sudo docker run ubuntu echo "hello world!"
 
-# Ver que contenedores se ejecutan en bacgroud
+# Ver que contenedores se ejecutan en background
 docker ps
+# sudo docker run ubuntu sleep 3
+
+# Ver todos los que contenedores se han ejecutado
+docker ps -a
+
+# Ejecutar contenedor y borrar
+docker run --rm ubuntu
+
+# Ejecutar un contenedor y añadir un nombre
+docker run --name hello_ubuntu ubuntu 
+
+# Listar información a bajo nivel de una imagen
+sudo docker run -d ubuntu sleep 60
+sudo docker inspect id_image
+
+# Checar logs de una imagen
+docker logs id_image
+
+# Ver imagenes que conforman una capa de docker
+docker history ubuntu
+
+# Abrir un contenedor que se ha cerrado
+    # Obtenemos el ID
+docker ps -a
+    # Inicializamos la imagen
+docker start -i <name/id>
+    # If the container wasn't started with an interactive shell to connect to, you need to do this to run a shell:
+docker exec -it <name/id> /bin/sh
 
 
+# Hacer commit de una imagen de docker
+docker ps -a
+# Obtenemos id
+docker commit id_image user/image:1.0
+# user/image    1.0       6f5e2d0470ef   9 seconds ago   243MB
+
+# Hacer login en cuenta de Docker
+
+
+
+docker commit ID_contenedor
 ~~~
 + docker run crea nuevos contenedores, no hay persistencia. Tal cual una instancia de una clase.
 
@@ -89,3 +129,134 @@ docker ps
 
 ## Segundo plano
 + Inician en modo detached y salen cuando el proceso raiz utilizado para ejecutar el contenedor sale
+
+# Formas de construir una imagen
+## Hacer commit de los cambios en el contenedor
+
+~~~bash
+# Iniciamos una imagen de debian
+sudo docker run -it --name debian-git debian
+
+# Dentro del docker descargamos git
+apt update
+apt install git 
+git --version
+exit
+
+# Docker Commit
+~~~
+
+## Escribir un Dockerfile
+Parecido a Makefile
+~~~bash
+touch Dockerfile
+~~~
+
+**Contenido Dockerfile**
++ Cada ``RUN`` añade una nueva capa a la imagen
+~~~Dockerfile
+FROM debian
+RUN apt-get update
+RUN apt intall -y git
+RUN apt intall -y curl
+~~~
+
+**Contenido Dockerfile**
++ Cada ``RUN`` añade una nueva capa a la imagen, concatenando comandos
+~~~Dockerfile
+FROM debian
+RUN apt-get update && apt-get install -y \
+    curl \
+    git 
+~~~
+
+**Intrucción CMD**
++ CMD especifica un comando que se va a ejecutar cuando el contenedor inicia
+~~~Dockerfile
+FROM ubuntu
+RUN apt-get update && apt-get install -y \
+    curl \
+    git 
+CMD ["echo", "todo listo"]
+~~~
+
+**Instrucción COPY**
++ CMD especifica un comando que se va a ejecutar cuando el contenedor inicia
+~~~Dockerfile
+FROM ubuntu
+RUN apt-get update && apt-get install -y \
+    curl \
+    git 
+CMD ["echo", "todo listo"]
+~~~
+
+
+**docker build (contexto de compilación)**
+~~~bash
+docker build -t user/image .
+docker build -t user/image /path/to/file
+~~~
+
+# Docker cache
+El cache de Docker es usado para no ejecutar los comandos una vez que estos ya se han ejecutado.
+
+Podria causar problemas en instrucciones como:
+~~~Dockerfile
+# Config inicial
+FROM debian
+RUN apt-get update
+RUN apt-get install -y git
+
+# Config nueva
+# cache
+FROM debian
+# cache
+RUN apt-get update
+# Estariamos instalando sin antes haber hecho un update, podría descargarse un paquete viejo
+RUN apt-get install -y curl git vim
+
+# Posible solución
+FROM debian
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    vim
+~~~
+
+Para invalidar el uso del cache se puede usar:
+~~~bash
+docker build -t user/image:1.0 . --no-cache=true
+~~~
+
+Ejecución
+~~~bash
+sudo docker run -it user/image:1.0
+~~~~
+
+
+
+# Ejemplos
+
+## Ejemplo Apache Tomcat
++ https://hub.docker.com/_/tomcat
+~~~bash
+docker run -it --rm tomcat:9.0
+docker run -it --rm -p 8888:8080 tomcat:9.0
+~~~
+
+## Crea tu propio "hola mundo" con Dockerfile
+
+**Crea un dockerfile**
+~~~bash
+vim Dockerfile
+~~~
+
+**Contenido del Dockerfile**
+~~~Dockerfile
+FROM debian
+RUN apt-get update && apt-get install -y \
+    vim
+CMD ["echo", "Hola, hola :)"]
+~~~
++ Usamos `apt-get` porque `apt` muestra la siguiente advertencia
+    + WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
