@@ -88,6 +88,10 @@ docker run --rm ubuntu
 # Ejecutar un contenedor y añadir un nombre
 docker run --name hello_ubuntu ubuntu 
 
+# Detener un contenedor
+docker ps
+docker stop id_name_contenedor 
+
 # Listar información a bajo nivel de una imagen
 sudo docker run -d ubuntu sleep 60
 sudo docker inspect id_image
@@ -275,7 +279,62 @@ Ejecución
 sudo docker run -it user/image:1.0
 ~~~
 
+# Enlace entre contenedores
+Es utilizado para crear microservicios
+Docker crea un túnel seguro entre contenedores para que estos no expongan puertos externamente
+~~~bash
+# Se crea un contenedor especificando un nombre
+docker run -d --name redis redis:3.2.0
+# Comprobar que esté corriendo bajo el nombre correcto
+docker ps
+# Construye la app en que se encuentre la app
+docker build -t dockerapp:1.0 .
+# Ejecuta el contenedor
+docker run -d -p 5000:5000 --link nombre_contenedor dockerapp:2.0
+~~~
 
+**¿Por qué funciona esto?**
+~~~bash
+cat /etc/hosts
+# IP id_contendor nombre_contenedor
+~~~
+
+# Docker Compose
+Sirve para desplegar diversas imagenes de Docker de manera automatizada
+
+Archivo
+- docker-compose.yml
+
+~~~bash
+# Levanta la aplicacion
+docker-compose up
+
+# Genera los logs
+docker-compose logs
+
+# Genera los logs -f
+docker-compose logs
+
+# Consulta logs para imagen en especifico
+docker-compose logs docker_image
+
+# Verifica estado de los contenedores creados por docker
+docker-compose ps
+
+# Finalizar ejecución
+docker-compose stop 
+
+# Reinicia
+docker-compose up
+# Inicia
+docker-compose start
+# Borra
+docker-compose rm
+
+# Para reconstruir las imagenes
+docker-compose build
+
+~~~
 
 # Ejemplos
 
