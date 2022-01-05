@@ -106,6 +106,9 @@ docker start -i <name/id>
     # If the container wasn't started with an interactive shell to connect to, you need to do this to run a shell:
 docker exec -it <name/id> /bin/sh
 
+# Entrar a un contenedor que está corriendo
+docker ps
+docker exec -it id_docker /bin/bash
 
 # Hacer commit de una imagen de docker
 docker ps -a
@@ -114,6 +117,16 @@ docker commit id_image user/image:1.0
 # user/image    1.0       6f5e2d0470ef   9 seconds ago   243MB
 
 # Hacer login en cuenta de Docker
+    # Tener el nombre correcto de la imagen
+    # username/image
+# Ver imagenes que tienes
+docker images
+# Cambiar tag
+docker tag id_image username/image:1.0
+# Hacer login en docker
+docker login --username=user
+# Enviar imagen a Dockerhub
+docker push username/image:1.0
 
 
 
@@ -181,13 +194,13 @@ CMD ["echo", "todo listo"]
 ~~~
 
 **Instrucción COPY**
-+ CMD especifica un comando que se va a ejecutar cuando el contenedor inicia
++ COPY copia archivos o directorios del contexto de compilación al sistema de archivos del contenedor
 ~~~Dockerfile
 FROM ubuntu
 RUN apt-get update && apt-get install -y \
-    curl \
-    git 
-CMD ["echo", "todo listo"]
+    curl 
+
+COPY files /src/files
 ~~~
 
 
@@ -195,6 +208,35 @@ CMD ["echo", "todo listo"]
 ~~~bash
 docker build -t user/image .
 docker build -t user/image /path/to/file
+~~~
+
+
+**Instrucción ADD**
+Investigar
+
+
+**Instrucción USER**
+Selecciona con que usuario va a correr la aplicación
+~~~Dockerfile
+FROM python:3.7
+RUN pip install Flask==0.11.1
+RUN useradd -ms /bin/bash admin
+USER admin
+WORKDIR /app
+COPY app /app
+CMD ["python", "app.py"]
+~~~
+
+**Instrucción WORKDIR**
+Selecciona el directorio de trabajo que vamos a utilizar
+~~~Dockerfile
+FROM python:3.7
+RUN pip install Flask==0.11.1
+RUN useradd -ms /bin/bash admin
+USER admin
+WORKDIR /app
+COPY app /app
+CMD ["python", "app.py"]
 ~~~
 
 # Docker cache
@@ -231,7 +273,7 @@ docker build -t user/image:1.0 . --no-cache=true
 Ejecución
 ~~~bash
 sudo docker run -it user/image:1.0
-~~~~
+~~~
 
 
 
@@ -260,3 +302,54 @@ CMD ["echo", "Hola, hola :)"]
 ~~~
 + Usamos `apt-get` porque `apt` muestra la siguiente advertencia
     + WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+## Servidor web en Flask
+
+**Estructura del directorio**
+~~~bash
+-rw-r--r-- 1 user user  143 Jan  4 17:37 Dockerfile
+-rwxr-xr-x 1 user user   51 Jan  4 14:54 edit.sh
+drwxr-xr-x 2 user user 4096 Jan  4 14:49 files
+drwxr-xr-x 2 user user 4096 Jan  4 17:37 flask
+    -rw-r--r-- 1 user user 171 Jan  4 17:37 app.py
+~~~
+
+**Dockerfile**
+~~~Dockerfile
+FROM python:3.7
+RUN pip install Flask==0.11.1
+RUN useradd -ms /bin/bash admin
+USER admin
+WORKDIR /app
+COPY flask /app
+CMD ["python", "app.py"]
+~~~
+
+**Servidor de python**
+~~~python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'Web App with Python Flask!'
+
+app.run(host='0.0.0.0', port=8888)
+~~~
+
+**Build docker**
+~~~bash
+docker build -t elcaza/flask_hello:1.0 .
+~~~
+
+~~~bash
+# Obtenemos nuestra ip
+ip a
+# 192.168.100.48
+
+# Inicializamos nuestro contenedor
+docker run -d -p 9999:8888 id_docker
+# OUTPUT
+# user@debian11:~/Documents/Docker$ curl http://192.168.100.48:9999
+# Web App with Python Flask!
+~~~
