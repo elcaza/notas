@@ -42,7 +42,7 @@ Para interactuar entre programas/procesos se utilizan los redireccionamientos, e
 
 | Significado | Forma | Bourne Shell | Ejemplo |
 | -- | -- | -- | -- |
-| stdin de archivo | ND | programa < archivo | Ejemplo |
+| stdin de archivo | ND | programa < archivo | Ejemplo | 
 | stdout a archivo | D | programa > archivo | `ls -l > lista_archivos` |
 | Añade stdout a archivo | ND | programa >> archivo | `ls -l >> lista_archivos` |
 | stderr a archivo | D | programa 2> archivo | `mkdir 2> error_mkdir_sin_argumento` |
@@ -52,6 +52,10 @@ Para interactuar entre programas/procesos se utilizan los redireccionamientos, e
 | Añade stdout y stderr a archivo | ND | programa >> archivo 2>&1 | Ejemplo |
 | stdout de programa_1 a stdin de programa_2 | - | programa_1 \| programa_2 | Ejemplo |
 | stdout y stderr de programa_1 a stdin de programa_2 | - | programa_1 2>&1 \| programa_2 | Ejemplo |
+
+#### Forma
++ ND => No destructivo
++ D => Destructivo
 
 ### Tipos de comillas 
 
@@ -70,7 +74,7 @@ Para interactuar entre programas/procesos se utilizan los redireccionamientos, e
 + Tomará el texto como un comando, será ejecutado y la salida será sustituida por el texto original
 + Ejemplo:
 
-```bash 
+~~~bash 
 echo "Hola, yo soy `whoami`"
 # Output 
 # Hola, yo soy user
@@ -78,11 +82,7 @@ echo "Hola, yo soy `whoami`"
 echo "Hola, hoy es $(date)"
 # Output
 # Hola, hoy es Thu Aug 13 11:47:04 PDT 2020
-```
-
-
-## Utilerías 
-El manual de todas las utilerías lo puedes consultar con:
+~~~
 
 `man utileria`
 
@@ -100,13 +100,20 @@ Dada la configuración regional del mapa de caracteres de cada computadora es ne
 ¿A qué nos referemos? 
 
 Dependiendo de la configuración que tengamos el orden mediante un `ls` podría ser:
-```
+~~~
 
 A a B b C c 
 
 A B C a b c 
-```
+~~~
 
+## Utilerías 
+El manual de todas las utilerías lo puedes consultar con:
+
+~~~bash
+# Consulta manual
+man <utileria>
+~~~
 
 ### Manejo de textos
 
@@ -114,25 +121,25 @@ A B C a b c
 Permite cortar columnas o campos de texto de un archivo o de la salida estándar
 
 Sintaxis básica
-```bash
+~~~bash
 cut OPTION... [FILE]...
 
 -f campos           Campos que serán cortados
 -d delimitador      Separador de campos
-```
+~~~
 
 Ejemplo
-```bash
+~~~bash
 cat /etc/passwd | cut -d ":" -f 1,3
 
 cut -d ":" -f 1,3 /etc/passwd
-```
+~~~
 
 #### sort
 Ordena el contenido de un archivo
 
 Sintaxis básica:
-```bash
+~~~bash
 sort [OPTION]... [FILE]...
 
 -r  Ordenamiento desc-asc
@@ -142,30 +149,30 @@ sort [OPTION]... [FILE]...
 -u  Borra líneas duplicadas
 -k  Campos a ordenar
 -t  Separador de campo
-```
+~~~
 
 Ejemplo:
-```bash
+~~~bash
 sort /etc/passwd
 
 cat /etc/passwd | sort
-```
+~~~
 
 #### tail
 Muestra la "n" última parte de un archivo. Por defecto las últims diez líneas.
 
 Sintaxis básica:
-```bash
+~~~bash
 tail [OPTION]... [FILE]...
 
 -n 20     números de líneas a mostrar
 -n +20    A partir de esa línea mostrar   
 -f        No regresa el control a la shell, entrará a un ciclo en donde cada segundo se volverá a aplicar sobre el archivo. Útil para monitorear el crecimiento de un archivo.
 
-```
+~~~
 
 Ejemplo:
-```bash
+~~~bash
 # Ultimas 10 líneas
 tail /etc/passwd
 
@@ -174,76 +181,99 @@ tail -n 20 /etc/passwd
 
 # A partir de la línea 20
 tail -n +20 /etc/passwd
-```
+~~~
 
 #### head
 Muestra la "n" última parte de un archivo. Por defecto las últims diez líneas.
 
 Sintaxis básica:
-```bash
+~~~bash
 
-```
+~~~
 
 Ejemplo:
-```bash
+~~~bash
 
-```
+~~~
 
 Sintaxis básica:
-```bash
+~~~bash
 
-```
+~~~
 
 Ejemplo:
-```bash
+~~~bash
 
-```
+~~~
 
 #### paste
 Descrip
 
 Sintaxis básica:
-```bash
+~~~bash
 
-```
+~~~
 
 Ejemplo:
-```bash
+~~~bash
 
-```
+~~~
 
 #### tr
-Descrip
+Traduce o borrar carácteres 
 
 Sintaxis básica:
-```bash
-
-```
+~~~bash
+tr [OPTION]... SET1 [SET2]
+~~~
 
 Ejemplo:
-```bash
+~~~bash
+# Boorando las letras "o|O"
+cat ejemplos/tr.txt | tr -d "o|O"
 
-```
+# Cambiando minusculas por mayusculas
+cat ejemplos/tr.txt | tr 'a-z' 'A-Z'
+~~~
+
+#### sed
+Stream editor for filtering and transforming text
+
+Sintaxis básica:
+~~~bash
+sed [OPTION]... {script-only-if-no-other-script} [input-file]...
+~~~
+
+Ejemplo:
+~~~bash
+# Boorando las letras "o|O"
+cat ejemplos/tr.txt | tr -d "o|O"
+~~~
 
 #### uniq
-Descrip
+Reporta u omite las líneas repetidas
 
 Sintaxis básica:
-```bash
+~~~bash
+uniq [OPTION]... [INPUT [OUTPUT]]
 
-```
+~~~
 
 Ejemplo:
-```bash
+~~~bash
+# Palabras repetidas de manera consecutiva
+uniq -c ejemplos/uniq.txt
 
-```
+# Palabras repetidas de manera global
+sort ejemplos/uniq.txt | uniq -c
+~~~
 
 ### Cálculos y conteos
 
 #### seq
 
 Sintaxis básica:
-```bash
+~~~bash
 seq [OPTION]... LAST
 seq [OPTION]... FIRST LAST
 seq [OPTION]... FIRST INCREMENT LAST
@@ -257,10 +287,10 @@ seq [OPTION]... FIRST INCREMENT LAST
 -w, --equal-width
 	equalize width by padding with leading zeroes
 
-```
+~~~
 
 Ejemplo:
-```bash
+~~~bash
 # Crea carpetas del 1 al 10
 for i in `seq 1 10`; do mkdir carpeta$i; done 
 
@@ -269,18 +299,6 @@ for i in `seq -w 1 10`; do echo carpeta$i; done
 
 # Alternativa
 mkdir carpeta0{00..09} carpeta{10..99}
-```
+~~~
 + Referencias 
 	+ https://serverfault.com/questions/397762/how-to-make-folders-00-99-with-a-single-command-in-ubuntu/397768
-
-#### Otro
-
-Sintaxis básica:
-```bash
-
-```
-
-Ejemplo:
-```bash
-
-```
