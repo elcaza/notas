@@ -1,0 +1,25 @@
+# vmware fusion
+## Cambiar la IP de la interfaz NAT
++ https://kb.vmware.com/s/article/1026510
+### Código
+~~~bash
+# vmware fusion 4+
+sudo nano /Library/Preferences/VMware\ Fusion/networking
+
+# restart service
+sudo /Applications/VMware\ Fusion.app/Contents/Library/vmnet-cli --configure
+sudo /Applications/VMware\ Fusion.app/Contents/Library/vmnet-cli --stop
+sudo /Applications/VMware\ Fusion.app/Contents/Library/vmnet-cli --start
+~~~
+
+# VScode
+## Path
++ https://stackoverflow.com/questions/30065227/run-open-vscode-from-mac-terminal
+
+
+# Pretty bash terminal
+~~~bash
+PS1="\[\e[38;5;209m\]┌──[\[\e[m\]\[\e[38;5;141m\]\u\e[m\]\[\e[38;5;209m\]:\[\e[m\]\[\e[0;38;5;105m\]\h\[\e[m\]:\w\[\e[m\[\e[38;5;209m\]]\[\e[m\]\n\[\e[38;5;209m\]└─$\[\e[m\] "
+~~~
++ Save in `~/.bash_profile`
+
