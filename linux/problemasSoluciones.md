@@ -4,6 +4,12 @@
 + Error al compilar
     + script => https://github.com/elcaza/vmware-host-troubleshooting
 
+# VMWare dont work with combination keys (alt+tab do not change the application)
++ Just start session with XOrg
+
+# Touchpad Laptop Linux
++ https://github.com/JoseExposito/touchegg?tab=readme-ov-file
++ https://github.com/priyaranjankumar/touchegg.conf
 
 # VirtualBox
 + No detecta un adaptador WIFI usb
