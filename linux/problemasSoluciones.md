@@ -73,3 +73,6 @@ Instalar CA de BURP
 ## Instalar sonarqube Linux
 + https://techexpert.tips/sonarqube/sonarqube-installation-ubuntu-linux/
 + https://techexpert.tips/sonarqube/sonarqube-scanner-installation-ubuntu-linux/
+
+# Driver WIFI
++ https://github.com/RinCat/RTL88x2BU-Linux-Driver
