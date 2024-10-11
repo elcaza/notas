@@ -1,3 +1,8 @@
+# Instalación de Debian junto a Windows 10
+En caso de que no funcione, para el futuro:
++ Habilitar UEFI desde el BIOS
++ Iniciar USB booteable desde el UEFI
+
 # VMWare WorkStation 15
 + Error al compilar
     + https://communities.vmware.com/thread/617466

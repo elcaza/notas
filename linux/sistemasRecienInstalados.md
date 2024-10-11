@@ -2,8 +2,8 @@
 
 ## Instalar las herramientas de compilación básicas
 ```
-sudo apt -y install build-essential
-sudo apt -y vim git
+sudo apt -y install build-essential git vim
+sudo apt -y install linux-headers-$(uname -r )
 ```
 
 ## Añadir usuario a sudoers
@@ -19,7 +19,7 @@ sudo apt install linux-headers-$(uname -r )
 
 ***
 
-## Instalar las herramientas de vmWare
+## Instalar las herramientas de vmWare (unicamente en máquina virtual)
 ```
 sudo apt -y install open-vm-tools
 sudo apt -y install open-vm-tools-desktop
