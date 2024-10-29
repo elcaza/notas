@@ -3,6 +3,18 @@ En caso de que no funcione, para el futuro:
 + Habilitar UEFI desde el BIOS
 + Iniciar USB booteable desde el UEFI
 
+# vmWare Workstation 17 on Debian 10
+~~~bash
+# Para desinstalar
+sudo /usr/bin/vmware-installer -u 
+
+# Falla al instalar módulos
+sudo vmware-modconfig --console --install-all
+    # Virtual machine monitor failed
+    # Virtual ethernet failed
+    # Para solucionar, desde BIOS deshabilitar el UEFI
+~~~
+
 # VMWare WorkStation 15
 + Error al compilar
     + https://communities.vmware.com/thread/617466
