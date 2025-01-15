@@ -93,3 +93,32 @@ Instalar CA de BURP
 
 # Driver WIFI
 + https://github.com/RinCat/RTL88x2BU-Linux-Driver
+
+# Focus mouse
+
+In Gnome Shell, there are three possible window focus modes, (from dconf-editor) 
+1. “click” means windows must be clicked in order to focus them
+1. “sloppy” means windows are focused when the mouse enters the window
+1. “mouse” means windows are focused when the mouse enters the window and unfocused when the mouse leaves the window. Thus, to disable the focus follows mouse, you need to set it to "click":
+
+~~~bash
+# View actual mode
+gsettings get org.gnome.desktop.wm.preferences focus-mode 
+
+# Set mode
+gsettings set org.gnome.desktop.wm.preferences focus-mode [click|sloppy|mouse]
+
+# Reset default
+gsettings reset org.gnome.desktop.wm.preferences focus-mode
+~~~
+
+## What's the difference between "mouse" and "sloppy"?
+The mouse mode will set focus on the desktop when the mouse hovers over a desktop area that has no open window, whereas the sloppy mode does not. The sloppy mode changes focus only if the mouse hovers over a window.
+
+## Source
++ https://askubuntu.com/questions/1249866/how-to-stop-focus-follows-mouse
+
+# Alternate between windows with ALT+TAB
++ Setting > Keyboard > shortcuts > navigation > Switch applications replace with switch windows
+
++ https://askubuntu.com/questions/112595/how-do-i-get-alt-tab-to-cycle-through-all-open-windows-on-gnome-classic
